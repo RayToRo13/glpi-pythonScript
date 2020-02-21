@@ -55,34 +55,9 @@ def creation_database():
     time.sleep(3)
     s.exec_command(cmd2)
     
-def mariadb():
-    import os
-    import sys
-    import paramiko
-    import time
-    import mysql.connector
-    user_name = sys.argv[2]
-    passwd = sys.argv[3]
-    ip = sys.argv[1]
-    s = paramiko.SSHClient()
-    s.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    s.connect(hostname=ip, username=user_name, password=passwd)
-    cmd1 = (mariadb())
-try:
-  cnx = mysql.connector.connect(user='sudo', password='',
-                                host='192.168.1.58', database='mysql')
-except mysql.connector.Error as err:
-  if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-    print("Something is wrong with your user name or password")
-  elif err.errno == errorcode.ER_BAD_DB_ERROR:
-    print("Database does not exist")
-  else:
-    print(err)
-else:
-  print("You are connected!")
-  cnx.close()
+
   
-mariadb()
+#mariadb()
 wget_glpi('-P /home/manu/ https://github.com/glpi-project/glpi/releases/download/9.4.5/glpi-9.4.5.tgz')   
 print("Téléchargement de GLPI..")
 conn_ssh('git mariadb-server apache2 bind9 php7.3 php7.3-zip php7.3-gd php7.3-intl php-pear php-imagick php7.3-imap php-memcache')
@@ -91,7 +66,7 @@ conn_ssh('php7.3-ldap php-cas php-apcu libapache2-mod-php7.3 php7.3-mysql')
 time.sleep(45)
 print("Création base de données GLPI..")
 
-creation_database()
+#creation_database()
 
 
 print("Deconnexion du serveur..")

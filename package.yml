@@ -1,2 +1,24 @@
-packages:
-  -apache2
+git
+apache2
+mariadb-server
+bind9
+php7.3
+php7.3-zip
+php7.3-gd
+php7.3-intl
+php-pear
+php-imagick
+php7.3-imap
+php-memcache
+php7.3-pspell
+php7.3-recode
+php7.3-tidy
+php7.3-xmlrpc
+php7.3-xsl
+php7.3-mbstring
+php-gettext
+php7.3-ldap
+php-cas
+php-apcu
+libapache2-mod-php7.3
+php7.3-mysql
