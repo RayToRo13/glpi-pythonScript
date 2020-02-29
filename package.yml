@@ -1,0 +1,38 @@
+---
+#paquets à installer
+packages:
+  exec:
+    - apache2
+  exec2:
+    - mariadb-server
+  php1:
+    - php7.3
+    - php7.3-zip
+    - php7.3-gd
+    - php7.3-intl
+    - php-pear
+    - php-imagick
+    - php7.3-imap
+    - php-memcache
+    - php7.3-pspell
+    - php7.3-recode
+    - php7.3-tidy
+    - php7.3-xmlrpc
+    - php7.3-xsl
+    - php7.3-mbstring
+    - php-gettext
+    - php7.3-ldap
+    - php-cas
+    - libapache2-mod-php7.3
+    - php7.3-mysql
+    - php-apcu
+  php2:
+    - php-apcu
+  commande:
+    - sudo service apache2 restart
+  commande2:
+    - sudo chmod 755 /var/www/html
+  commande3:
+    - sudo chown www-data:www-data -R /var/www/html/
+  commande4:
+    - sudo apt-get update -y && sudo apt-get upgrade -y
