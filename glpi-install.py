@@ -171,6 +171,11 @@ conn_ssh(ip, user_name, passwd, maCommand3)
 install(ldap)
 time.sleep(5)
 install(mysql)
+os.system('ssh manu@192.168.1.58 bash < ./glpi_install.sh')
+time.sleep(30)
+RmInstallGlpi = 'sudo rm /var/www/html/glpi/install/install.php'
+conn_ssh(ip, user_name, passwd, RmInstallGlpi)
+time.sleep(5)
 conn_ssh(ip, user_name, passwd, maCommand3)
 print("Création base de données GLPI..")
 
