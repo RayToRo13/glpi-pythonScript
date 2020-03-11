@@ -1,4 +1,4 @@
----
+
 #paquets à installer
 packages:
   exec:
@@ -40,4 +40,3 @@ packages:
     - sudo chown www-data:www-data -R /var/www/html/
   commande4:
     - sudo apt-get update -y && sudo apt-get upgrade -y
----
