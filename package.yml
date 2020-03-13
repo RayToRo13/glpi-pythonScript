@@ -1,4 +1,4 @@
----
+
 #paquets à installer
 packages:
   exec:
@@ -25,13 +25,6 @@ packages:
     - php-cas
     - libapache2-mod-php7.3
     - php7.3-mysql
-    - php-apcu
-    - php-ldap
-    - php-mysql
-  php2:
-    - php-apcu
-    - php-ldap
-    - php-mysql
   commande:
     - sudo service apache2 restart
   commande2:
@@ -40,4 +33,3 @@ packages:
     - sudo chown www-data:www-data -R /var/www/html/
   commande4:
     - sudo apt-get update -y && sudo apt-get upgrade -y
----

@@ -5,179 +5,158 @@ import paramiko
 import time
 import yaml
 
+#Simplification des paramètres de connexion
 ip = sys.argv[1]
 user_name = sys.argv[2]
 passwd = sys.argv[3]
+log = "ip, user_name, passwd, " 
 
-#Connection au serveur sous le format glpi-install.py IP USERNAME PASSWORD
-#L'appel de la def à besoin du/des packages que l'on souhaite installer, ils sont dans le fichier package.yaml
-def conn_ssh(ip, user_name, passwd, myCommand):
+#Connexion au serveur sous le format glpi-install.py IP USERNAME PASSWORD /chemin du fichier yaml/fichier.yml
+#L'appel de la def à besoin du/des packages que l'on souhaite installer, ils sont dans le fichier package.yml
+
+def ssh(log, myCommand):
     
     s = paramiko.SSHClient()
     s.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    s.connect(hostname=ip, username=user_name, password=passwd)
-    s.exec_command(myCommand)
-    time.sleep(21)
-    s.close()            
+    try :
+        s.connect(hostname=ip, username=user_name, password=passwd)
+        s.exec_command('{}'.format(myCommand))
+        time.sleep(13)
+        s.close()
+    except :
+        print ("Erreur de connexion...")
+        time.sleep(1)
+        print ("Veuillez vérifier vos paramètres...")
+        time.sleep(1)
+        exit()            
         
+
 def yaml():
 #lis le fichier package.yml
   import yaml
-  with open(r'/home/test/Documents/Python_codes/package.yml') as p:
-    paquets = yaml.safe_load(p)
-    return paquets
-    variable = yaml()
-    var = ' '.join(variable["packages"]["exec"])
+  fichier = sys.argv[4]
+  try :
+        with open(fichier) as p:
+            paquets = yaml.safe_load(p)
+            return paquets
+            variable = yaml()
+            var = ' '.join(variable["packages"]["exec"])
 #lecture des valeurs de la liste "exec" sous forme de string sans caractères spéciaux.
-    print(var)
-    
-def install_glpi(glpi):
-    
-    ip = sys.argv[1]
-    user_name = sys.argv[2]
-    passwd = sys.argv[3]
-    s = paramiko.SSHClient()
-    s.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    s.connect(hostname=ip, username=user_name, password=passwd)
-    cmd1 = '{}'.format(glpi)
-    s.exec_command(cmd1)
-    time.sleep(5)
-    print("Installation de GLPI")
-    time.sleep(6)
-            
-def install(install):
-    
-    ip = sys.argv[1]
-    user_name = sys.argv[2]
-    passwd = sys.argv[3]
-    s = paramiko.SSHClient()
-    s.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    s.connect(hostname=ip, username=user_name, password=passwd)
-    cmd1 = '{}'.format(install)
-    s.exec_command(cmd1)
-    time.sleep(11)
-              
-
-def wget_glpi(glpi):
-    
-    ip = sys.argv[1]
-    user_name = sys.argv[2]
-    passwd = sys.argv[3]
-    s = paramiko.SSHClient()
-    s.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    s.connect(hostname=ip, username=user_name, password=passwd)
-    cmd2 = 'sudo wget {}'.format(glpi)
-    s.exec_command(cmd2)
-    
-   
-def efface(efface):
-   
-    ip = sys.argv[1]
-    user_name = sys.argv[2]
-    passwd = sys.argv[3]
-    s = paramiko.SSHClient()
-    s.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    s.connect(hostname=ip, username=user_name, password=passwd)
-    cmd1 = '{}'.format(efface)
-    s.exec_command(cmd1)
-    s.close()
-
-#Lien vers la dernière version de glpi|Modifier si nécessaire.   
-wget_glpi('-P /home/manu https://github.com/glpi-project/glpi/releases/download/9.4.5/glpi-9.4.5.tgz')   
-time.sleep(10)
-print("Téléchargement de GLPI..")
-#Conversion en variables pour les paramètres des def
+            print(var)
+  except :
+      print ("Fichier yaml inexistant, vérifier son nom")
+      exit()
+                    
+##################################VARIABLES################################
 Vars = yaml()
-php1 = ' '.join(Vars["packages"]["php1"])
-php2 = ' '.join(Vars["packages"]["php2"])
+
+#Déclaration de mes variables pour simplification
+#Lecture des listes dans le dictionnaire yaml
+php = ' '.join(Vars["packages"]["php1"])
+PaquetsPhp = 'sudo apt-get install {} -y'.format(php)
+
+
 apache2 = ' '.join(Vars["packages"]["exec"])
-mariadb = ' '.join(Vars["packages"]["exec2"])
-com1 = ' '.join(Vars["packages"]["commande"])
-com2 = ' '.join(Vars["packages"]["commande2"])
-com3 = ' '.join(Vars["packages"]["commande3"])
-update = ' '.join(Vars["packages"]["commande4"])
 maCommand = 'sudo apt-get install {} -y'.format(apache2)
-maCommand7 = 'sudo apt-get install {} -y'.format(mariadb)
-maCommand2 = 'sudo apt-get install {} -y'.format(php1)
-maCommand8 = 'sudo apt-get install {} -y'.format(php2)
-CpFichier = 'sudo mv /home/manu/php.ini /etc/php/7.3/apache2/'
-ldap = 'sudo apt-get install php-ldap'
-mysql = 'sudo apt-get install php-mysql'
 
-#on update & upgrade le serveur distant
-#Mise à jour paquets
-print("Mise à jour du système")
-maCommand6 = '{}'.format(update)
-#Restart apache2
+mariadb = ' '.join(Vars["packages"]["exec2"])
+PaquetMariaDB = 'sudo apt-get install {} -y'.format(mariadb)
 
-maCommand3 = '{}'.format(com1)
+#Reboot apache2
+com1 = ' '.join(Vars["packages"]["commande"])
+RebootApache = '{}'.format(com1)
+
 #Droits pour v/var/www/html
-maCommand4 = '{}'.format(com2)
-#Changement Groupe www-data pour le dossier /var/www/html
-maCommand5 = '{}'.format(com3)
+com2 = ' '.join(Vars["packages"]["commande2"])
+DroitsGLPI = '{}'.format(com2)
 
-conn_ssh(ip, user_name, passwd, maCommand6)
+#Changement Groupe www-data pour le dossier /var/www/html
+com3 = ' '.join(Vars["packages"]["commande3"])
+ChGrpGLPI = '{}'.format(com3)
+
+#Mise à jour paquets
+com4 = ' '.join(Vars["packages"]["commande4"])
+update = '{}'.format(com4)
+
+##########################FIN_VARIABLES############################
+
+
+#########################DEBUT_SCRIPT################################
+#Lien vers la dernière version de glpi|Modifier si nécessaire.
+
+print("Connexion en cours...")   
+ssh(log, 'sudo wget -P /home/manu https://github.com/glpi-project/glpi/releases/download/9.4.5/glpi-9.4.5.tgz')   
+print("Téléchargement de GLPI..")
+time.sleep(15)
+
+print("Mise à jour du système")
+time.sleep(10)
+
+ssh(log, update)
 print("...........5%")
 print("Installation des modules LAMP")
-conn_ssh(ip, user_name, passwd, maCommand)
+ssh(log, RebootApache)
+time.sleep(10)
 
-time.sleep(20)
 print("...........10%")
 print("installation des modules php..")
 #Re-installation des modules pour valider les intallations
-conn_ssh(ip, user_name, passwd, maCommand7)
-conn_ssh(ip, user_name, passwd, maCommand8)
-conn_ssh(ip, user_name, passwd, maCommand3)
+ssh(log, PaquetMariaDB)
+time.sleep(20)
+ssh(log, RebootApache)
+time.sleep(10)
 print("...........25%")
 print("Redémarrage du service MariaDB")
-conn_ssh(ip, user_name, passwd, maCommand2)
-time.sleep(45)
-
+ssh(log, PaquetsPhp)
+time.sleep(10)
 
 print("...........35%")
-
-conn_ssh(ip, user_name, passwd, maCommand5)
+ssh(log, ChGrpGLPI)
 print("...........50%")
-conn_ssh(ip, user_name, passwd, maCommand3)
+ssh(log, RebootApache)
 print ("Redémarrage de apache2")
-time.sleep(35)
+time.sleep(10)
 
-install_glpi('sudo tar xvzf /home/manu/glpi-9.4.5.tgz -C /var/www/html')
+ssh(log, 'sudo tar xvzf /home/manu/glpi-9.4.5.tgz -C /var/www/html')
 time.sleep(15)
+
 print("...........60%")
-conn_ssh(ip, user_name, passwd, maCommand3)
+ssh(log, RebootApache)
 print("Configuration finale de GLPI")
 print("...........70%")
-conn_ssh(ip, user_name, passwd, maCommand2)
-conn_ssh(ip, user_name, passwd, maCommand4)
-conn_ssh(ip, user_name, passwd, maCommand5)
+ssh(log, PaquetsPhp)
+ssh(log, DroitsGLPI)
+ssh(log, ChGrpGLPI)
 print("...........85%")
-conn_ssh(ip, user_name, passwd, maCommand3)
-
+ssh(log, RebootApache)
 os.system('ssh manu@192.168.1.58 bash < ./mariadb.sh')
 time.sleep(3)
+
 print("Transfert du fichier de conf apache2")
-efface('sudo rm /etc/php/7.3/apache2/php.ini')
+ssh(log, 'sudo rm /etc/php/7.3/apache2/php.ini')
 time.sleep(3)
+
 os.system('scp php.ini manu@192.168.1.58:/home/manu')
 time.sleep(3)
-conn_ssh(ip, user_name, passwd, CpFichier)
-conn_ssh(ip, user_name, passwd, maCommand8)
-conn_ssh(ip, user_name, passwd, maCommand3)
-install(ldap)
-time.sleep(5)
-install(mysql)
+
+ssh(log, 'sudo mv /home/manu/php.ini /etc/php/7.3/apache2/')
+ssh(log, RebootApache)
+
+ssh(log, 'sudo apt-get install php-apcu')
+ssh(log, 'sudo apt-get install php-ldap')
+ssh(log, 'sudo apt-get install php-mysql')
+
 print("...........90%")
 print("Configuration silencieuse de GLPI..")
 os.system('ssh manu@192.168.1.58 bash < ./glpi_install.sh')
-time.sleep(30)
-RmInstallGlpi = 'sudo rm /var/www/html/glpi/install/install.php'
-conn_ssh(ip, user_name, passwd, RmInstallGlpi)
+time.sleep(5)
+
+ #Suppression du fichier install.php par sécuritée
+ssh(log, 'sudo rm /var/www/html/glpi/install/install.php')
 print("...........95%")
 time.sleep(5)
-conn_ssh(ip, user_name, passwd, maCommand3)
+
+ssh(log, RebootApache)
 print("...........100%")
-#### mariaDB
 print("Deconnexion du serveur..")
-time.sleep(3)
-print("Connection terminée")
+
