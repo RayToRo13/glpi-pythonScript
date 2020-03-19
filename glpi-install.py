@@ -83,11 +83,11 @@ update = '{}'.format(com4)
 
 #########################DEBUT_SCRIPT################################
 #Lien vers la dernière version de glpi|Modifier si nécessaire.
-
+user = sys.argv[2]
 print("Connexion en cours...")   
-ssh(log, 'sudo wget -P /home/manu https://github.com/glpi-project/glpi/releases/download/9.4.5/glpi-9.4.5.tgz')   
+ssh(log, 'sudo wget -P /var/tmp https://github.com/glpi-project/glpi/releases/download/9.4.5/glpi-9.4.5.tgz')
 print("Téléchargement de GLPI..")
-time.sleep(15)
+time.sleep(20)
 
 print("Mise à jour du système")
 time.sleep(10)
@@ -102,7 +102,7 @@ print("...........10%")
 print("installation des modules php..")
 #Re-installation des modules pour valider les intallations
 ssh(log, PaquetMariaDB)
-time.sleep(20)
+time.sleep(45)
 ssh(log, RebootApache)
 time.sleep(10)
 print("...........25%")
@@ -117,8 +117,8 @@ ssh(log, RebootApache)
 print ("Redémarrage de apache2")
 time.sleep(10)
 
-ssh(log, 'sudo tar xvzf /home/manu/glpi-9.4.5.tgz -C /var/www/html')
-time.sleep(15)
+ssh(log, 'sudo tar xvzf /var/tmp/glpi-9.4.5.tgz -C /var/www/html')
+time.sleep(20)
 
 print("...........60%")
 ssh(log, RebootApache)
@@ -129,17 +129,18 @@ ssh(log, DroitsGLPI)
 ssh(log, ChGrpGLPI)
 print("...........85%")
 ssh(log, RebootApache)
-os.system('ssh manu@192.168.1.58 bash < ./mariadb.sh')
-time.sleep(3)
+time.sleep(10)
+os.system('ssh {}@192.168.1.58 bash < ./mariadb.sh'.format(user))
+time.sleep(5)
 
 print("Transfert du fichier de conf apache2")
 ssh(log, 'sudo rm /etc/php/7.3/apache2/php.ini')
 time.sleep(3)
 
-os.system('scp php.ini manu@192.168.1.58:/home/manu')
+os.system('scp php.ini {}@192.168.1.58:/home/{}'.format(user, user))
 time.sleep(3)
 
-ssh(log, 'sudo mv /home/manu/php.ini /etc/php/7.3/apache2/')
+ssh(log, 'sudo mv /home/{}/php.ini /etc/php/7.3/apache2/'.format(user))
 ssh(log, RebootApache)
 
 ssh(log, 'sudo apt-get install php-apcu')
@@ -148,14 +149,14 @@ ssh(log, 'sudo apt-get install php-mysql')
 
 print("...........90%")
 print("Configuration silencieuse de GLPI..")
-os.system('ssh manu@192.168.1.58 bash < ./glpi_install.sh')
+os.system('ssh {}@192.168.1.58 bash < ./glpi_install.sh'.format(user))
 time.sleep(5)
 
  #Suppression du fichier install.php par sécuritée
 ssh(log, 'sudo rm /var/www/html/glpi/install/install.php')
 print("...........95%")
 time.sleep(5)
-
+ssh(log , 'sudo rm /var/tmp/glpi-9.4.5.tgz'.format(user))
 ssh(log, RebootApache)
 print("...........100%")
 print("Deconnexion du serveur..")
