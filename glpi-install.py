@@ -93,6 +93,7 @@ print("Mise à jour du système")
 time.sleep(10)
 
 ssh(log, update)
+time.sleep(40)
 print("...........5%")
 print("Installation des modules LAMP")
 ssh(log, RebootApache)
@@ -160,4 +161,3 @@ ssh(log , 'sudo rm /var/tmp/glpi-9.4.5.tgz'.format(user))
 ssh(log, RebootApache)
 print("...........100%")
 print("Deconnexion du serveur..")
-
