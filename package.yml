@@ -25,6 +25,8 @@ packages:
     - php-cas
     - libapache2-mod-php7.3
     - php7.3-mysql
+
+Cmd:
   commande:
     - sudo service apache2 restart
   commande2:
