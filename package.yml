@@ -25,11 +25,14 @@ packages:
     - php-cas
     - libapache2-mod-php7.3
     - php7.3-mysql
+    - php-apcu
+    
+
+cmd:
   commande:
     - sudo service apache2 restart
   commande2:
     - sudo chmod 755 /var/www/html
   commande3:
     - sudo chown www-data:www-data -R /var/www/html/
-  commande4:
-    - sudo apt-get update -y && sudo apt-get upgrade -y
+  
