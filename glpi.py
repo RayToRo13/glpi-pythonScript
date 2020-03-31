@@ -55,7 +55,7 @@ def ssh(log, myCommand):
         time.sleep(1)
         exit()            
         
-##################################VARIABLES################################  
+##################################VARIABLES################################
 #Simplication des variables pour les différents appels de celles-ci          
 Vars = yaml_paquets()
 user = sys.argv[2]
