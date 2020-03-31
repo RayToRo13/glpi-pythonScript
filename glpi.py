@@ -106,7 +106,7 @@ ssh(log, DroitsGLPI)
 os.system('ssh {}@192.168.1.58 bash < ./mariadb.sh'.format(user))
 print("Transfert du fichier de conf apache2")
 ssh(log, 'sudo rm /etc/php/7.3/apache2/php.ini')
-#####################################################################################
+####################################################################################
 
 #remplacement du fichier /etc/php/7.3/apache2/php.ini avec une valeur default_socket_timeout = 60 au lieu de 30, pour résoudre
 #l'erreur PHP : default_socket_timeout.
