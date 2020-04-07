@@ -8,9 +8,9 @@
 # Conditions d'utilisation
   - Ubuntu 18.04
   - python3.8
- --pip3
- --paramiko2.7.1
- --yaml-1.3
+  - pip3
+  - paramiko2.7.1
+  - yaml-1.3
   - Client sous debian
   - Sudo sans mot de passe en local et en distant
 
