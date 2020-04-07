@@ -21,5 +21,8 @@ Le script necessite les droits sudo sans mot de passe, pour l'utilisateur avec l
 Sudo sans password :
 $user = utilisateur avec lequel on va se connecter et éxécuter le script
 
-ouvrir en root /etc/sudoers et y ajouter :
+éditer le fichier en root:
+
+/etc/sudoers et y ajouter :
+
 $user ALL=(ALL) NOPASSWD: ALL
