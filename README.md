@@ -1,4 +1,4 @@
-
+#Test
 Pré requis:
 
 Yaml python Pip Paramiko
@@ -15,7 +15,7 @@ Les infos de la base de donnée se modifient dans mariadb.sh.
 Répercuter les modifications dans glpi_install.sh
 
 Le code des différents script sont commentés.
-
+#test
 Le script necessite les droits sudo sans mot de passe, pour l'utilisateur avec lequel on se connecte sur la machine distante.
 
 Sudo sans password :
