@@ -1,4 +1,3 @@
-
 #paquets à installer
 packages:
   exec:
@@ -35,4 +34,3 @@ cmd:
     - sudo chmod 755 /var/www/html
   commande3:
     - sudo chown www-data:www-data -R /var/www/html/
-  

@@ -3,6 +3,7 @@ import os
 import sys
 import paramiko
 import yaml
+import time
 
 #Simplification des paramètres de connexion
 ip = sys.argv[1]
@@ -55,7 +56,7 @@ def ssh(log, myCommand):
         time.sleep(1)
         exit()            
         
-##################################VARIABLES################################
+##################################VARIABLES################################  
 #Simplication des variables pour les différents appels de celles-ci          
 Vars = yaml_paquets()
 user = sys.argv[2]
@@ -65,7 +66,7 @@ update = "sudo apt-get update -y && sudo apt-get upgrade -y"
 com1 = ' '.join(Vars["cmd"]["commande"])
 RebootApache = '{}'.format(com1)
 
-#Droits pour v/var/www/html
+#Droits pour /var/www/html
 com2 = ' '.join(Vars["cmd"]["commande2"])
 DroitsGLPI = '{}'.format(com2)
 
@@ -103,15 +104,15 @@ ssh(log, ChGrpGLPI)
 ssh(log, DroitsGLPI)
 
 #Application du script mariadb.sh qui crée la base de donnée, avec mot de passe
-os.system('ssh {}@192.168.1.58 bash < ./mariadb.sh'.format(user))
+os.system('ssh {}@{} bash < ./mariadb.sh'.format(user, ip))
 print("Transfert du fichier de conf apache2")
 ssh(log, 'sudo rm /etc/php/7.3/apache2/php.ini')
-####################################################################################
+#####################################################################################
 
 #remplacement du fichier /etc/php/7.3/apache2/php.ini avec une valeur default_socket_timeout = 60 au lieu de 30, pour résoudre
 #l'erreur PHP : default_socket_timeout.
 #Si version php différente modifier la version de php dans le chemin scp.
-os.system('scp php.ini {}@192.168.1.58:/home/{}'.format(user, user))
+os.system('scp php.ini {}@{}:/home/{}'.format(user, ip, user))
 ssh(log, 'sudo mv /home/{}/php.ini /etc/php/7.3/apache2/'.format(user))
 #####################################################################################
 
@@ -120,7 +121,7 @@ ssh(log, RebootApache)
 #Connection à la DB glpi automatisé. Instructions dans glpi_install.sh si besoin de modifer les accès, nom de DB.
 #Doit être similaire aux logs/db de mariadb.sh
 print("Configuration silencieuse de GLPI..")
-os.system('ssh {}@192.168.1.58 bash < ./glpi_install.sh'.format(user))
+os.system('ssh {}@{} bash < ./glpi_install.sh'.format(user, ip))
 ######################################################################################
 
 #Suppression du fichier install.php (pour sécurité) et du glpi-x.x.x.tgz
