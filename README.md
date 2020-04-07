@@ -1,28 +1,100 @@
-#Test
-Pré requis:
+# Déploiement d'un glpi sur une machine distante
 
-Yaml python Pip Paramiko
+[![N|Solid](https://glpi-project.org/wp-content/uploads/2017/03/logo-glpi-bleu-1.png)](https://glpi-project.org/fr/) 
 
-Script d'installation glpi sous python
+[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger) version 1.0
 
-Script permettant l'installation de glpi sur une machine distante.
- Utilise le protocole ssh(paramiko).
 
-Pour lancer le script il faut 4 arguments : 
-glpi.py #ip #user_ssh #pass_user_ssh #package.yaml à utiliser.
+# Conditions d'utilisation
+  - Ubuntu 18.04
+  - python3.8
+ --pip3
+ --paramiko2.7.1
+ --yaml-1.3
+  - Client sous debian
+  - Sudo sans mot de passe en local et en distant
 
-Les infos de la base de donnée se modifient dans mariadb.sh. 
-Répercuter les modifications dans glpi_install.sh
 
-Le code des différents script sont commentés.
-#test
-Le script necessite les droits sudo sans mot de passe, pour l'utilisateur avec lequel on se connecte sur la machine distante.
-
-Sudo sans password :
-$user = utilisateur avec lequel on va se connecter et éxécuter le script
+### Sudo sans password : 
+- $user = utilisateur avec lequel on va se connecter et éxécuter le script
 
 éditer le fichier en root:
+```
+$ /etc/sudoers 
+```
+et y ajouter :
+>$user ALL=(ALL) NOPASSWD: ALL
 
-/etc/sudoers et y ajouter :
+## Installations
+#### python
+Pré-requis
+```sh
+ $ sudo apt update
+ $ sudo apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev wget
+```
+Téléchargement de python
+```sh
+$ cd /tmp
+$ wget https://www.python.org/ftp/python/3.8.0/Python-3.8.0.tgz
+```
+Extraction du .tgz et initiilisation de l'installation
+```sh
+$ tar -xf Python-3.8.0.tgz
+$ cd Python-3.8.0
+$ ./configure --enable-optimizations
+```
+Ensuite on lance ces commandes ( on remplace 1 par le nombre de Cores de son cpu)
+```sh
+$ make -j 1
+$ sudo make altinstall
+ ```
+ Une fois terminé on vérifie sa version de python installée
+```sh 
+$ python3.8 --version
+``` 
 
-$user ALL=(ALL) NOPASSWD: ALL
+> Python 3.8.0
+
+
+### dépendances
+#### pip
+```
+$ sudo apt install python3-pip
+```
+
+#### yaml
+```
+$ pip3 install yaml-1.3
+```
+#### paramiko
+```
+$ pip3 install paramiko
+```
+* [doc paramiko](http://www.paramiko.org/installing.html)
+# lancement du script
+
+  - A executer avec l'user qui les droit sudo sans password en local
+```sh
+$ python3 glpi.py $ip $user_ssh $pass_user_ssh $package_yaml_a_utiliser
+```
+![](https://i.ibb.co/n8PGY4J/1.png)
+ - Resultat finale après execution
+![](https://i.ibb.co/WnJ3JRw/script-output.png)
+ 
+
+### fonctionnement
+Le script permet de déployer un glpi sur une machine distante. Il automatise :
+ - le télechargement et l'installation d'apache2, mariadb, php7.3
+ - téléchargement de glpi et installation
+ - création base de donnée
+ - installation silencieuse de glpi
+
+### Contributions
+Aller a
+
+
+### License GNU General Public License v3.0
+Vous pouvez disposer du script librement.
+
+
+
