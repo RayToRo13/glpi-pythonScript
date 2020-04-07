@@ -60,6 +60,7 @@ def ssh(log, myCommand):
 #Simplication des variables pour les différents appels de celles-ci          
 Vars = yaml_paquets()
 user = sys.argv[2]
+ipdest = sys.argv[1]
 update = "sudo apt-get update -y && sudo apt-get upgrade -y"
 
 #Reboot apache2
@@ -104,7 +105,7 @@ ssh(log, ChGrpGLPI)
 ssh(log, DroitsGLPI)
 
 #Application du script mariadb.sh qui crée la base de donnée, avec mot de passe
-os.system('ssh {}@{} bash < ./mariadb.sh'.format(user, ip))
+os.system('ssh {}@{} bash < ./mariadb.sh'.format(user, ipdest))
 print("Transfert du fichier de conf apache2")
 ssh(log, 'sudo rm /etc/php/7.3/apache2/php.ini')
 #####################################################################################
@@ -112,7 +113,7 @@ ssh(log, 'sudo rm /etc/php/7.3/apache2/php.ini')
 #remplacement du fichier /etc/php/7.3/apache2/php.ini avec une valeur default_socket_timeout = 60 au lieu de 30, pour résoudre
 #l'erreur PHP : default_socket_timeout.
 #Si version php différente modifier la version de php dans le chemin scp.
-os.system('scp php.ini {}@{}:/home/{}'.format(user, ip, user))
+os.system('scp php.ini {}@{}:/home/{}'.format(user, ipdest, user))
 ssh(log, 'sudo mv /home/{}/php.ini /etc/php/7.3/apache2/'.format(user))
 #####################################################################################
 
@@ -121,7 +122,7 @@ ssh(log, RebootApache)
 #Connection à la DB glpi automatisé. Instructions dans glpi_install.sh si besoin de modifer les accès, nom de DB.
 #Doit être similaire aux logs/db de mariadb.sh
 print("Configuration silencieuse de GLPI..")
-os.system('ssh {}@{} bash < ./glpi_install.sh'.format(user, ip))
+os.system('ssh {}@{} bash < ./glpi_install.sh'.format(user, ipdest))
 ######################################################################################
 
 #Suppression du fichier install.php (pour sécurité) et du glpi-x.x.x.tgz
