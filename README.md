@@ -9,8 +9,7 @@
   - Ubuntu 18.04
   - python3.8
   - pip3
-  - paramiko2.7.1
-  - yaml-1.3
+  - depuis pip3 install (paramiko2.7.1 et yaml-1.3)
   - Client sous debian
   - Sudo sans mot de passe en local et en distant
 
@@ -90,11 +89,23 @@ Le script permet de déployer un glpi sur une machine distante. Il automatise :
  - installation silencieuse de glpi
 
 ### Contributions
-Aller a
+Pour les contributions veuillez :
+- fork le repository
+- Créer une nouvelle branche pour les modifications (git checkout -b ma_nouvelle_branche)
+- Commit vos modifications   (git commit -am 'Ajout de modifications')
+- Push dans votre branche (git push origin Ajout de modifications)
+- Créer une nouvelle pull request afin que je puisse décider d'inclure ou non vos modifications
+
+# Script réalisé dans le cadre d'un projet de parcours de formation sur
+ [![N|Solid](https://blog.openclassrooms.com/wp-content/uploads/2018/05/OC.png)](https://openclassrooms.com/)
+ 
 
 
 ### License GNU General Public License v3.0
 Vous pouvez disposer du script librement.
+
+
+
 
 
 
