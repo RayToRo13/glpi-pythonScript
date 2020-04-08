@@ -9,9 +9,12 @@
   - Ubuntu 18.04
   - python3.8
   - pip3
-  - depuis pip3 install (paramiko2.7.1 et yaml-1.3)
   - Client sous debian
   - Sudo sans mot de passe en local et en distant
+## Depuis pip install
+  -paramiko2.7.1
+  -yaml-1.3
+  
 
 
 ### Sudo sans password : 
@@ -87,14 +90,24 @@ Le script permet de déployer un glpi sur une machine distante. Il automatise :
  - téléchargement de glpi et installation
  - création base de donnée
  - installation silencieuse de glpi
+ 
+
+## Erreurs de lancement
+- Un contrôle de la bonne connection au serveur distant est prévu par le script.
+Un problème d'ip username password en est en générale la cause
+
+- une contrôle de la présence du fichier yaml
+Le fichier yaml dans être présent dans le dossier du script (pas de chemin relationnel ou absolu)
+
 
 ### Contributions
 Pour les contributions veuillez :
-- fork le repository
+- fork le repository 
+- git clone https://github.com/RayToRo13/glpi-pythonScript.git
 - Créer une nouvelle branche pour les modifications (git checkout -b ma_nouvelle_branche)
 - Commit vos modifications   (git commit -am 'Ajout de modifications')
-- Push dans votre branche (git push origin Ajout de modifications)
-- Créer une nouvelle pull request afin que je puisse décider d'inclure ou non vos modifications
+- Push dans votre fork (git push origin Ajout de modifications)
+- Créer une nouvelle pull request du fork afin que je puisse décider d'inclure ou non vos modifications
 
 # Script réalisé dans le cadre d'un projet de parcours de formation sur
  [![N|Solid](https://blog.openclassrooms.com/wp-content/uploads/2018/05/OC.png)](https://openclassrooms.com/)
@@ -103,9 +116,6 @@ Pour les contributions veuillez :
 
 ### License GNU General Public License v3.0
 Vous pouvez disposer du script librement.
-
-
-
 
 
 
