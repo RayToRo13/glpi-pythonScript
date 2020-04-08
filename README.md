@@ -94,11 +94,17 @@ Le script permet de déployer un glpi sur une machine distante. Il automatise :
 
 ## Erreurs de lancement
 - Un contrôle de la bonne connection au serveur distant est prévu par le script.
-Un problème d'ip username password en est en générale la cause
+Un problème d'ip username password en est généralement la cause.
+
+![](https://i.ibb.co/47BskJP/erreur-ssh.png)
+
+
 
 - une contrôle de la présence du fichier yaml
 Le fichier yaml dans être présent dans le dossier du script (pas de chemin relationnel ou absolu)
 
+
+![](https://i.ibb.co/1rfTzH8/erreur-yaml.png)
 
 ### Contributions
 Pour les contributions veuillez :
