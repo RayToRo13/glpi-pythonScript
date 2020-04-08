@@ -1,4 +1,4 @@
-#paquets à installer
+#paquets à installer 
 packages:
   exec:
     - apache2
