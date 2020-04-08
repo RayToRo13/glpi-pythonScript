@@ -86,10 +86,10 @@ $ python3 glpi.py $ip $user_ssh $pass_user_ssh $package_yaml_a_utiliser
 
 ### fonctionnement
 Le script permet de déployer un glpi sur une machine distante. Il automatise :
- - le télechargement et l'installation d'apache2, mariadb, php7.3
+ - le télechargement et l'installation d'apache2, mariadb, php7.3 (package.yml)
  - téléchargement de glpi et installation
- - création base de donnée
- - installation silencieuse de glpi
+ - création base de donnée (mariadb.sh)
+ - installation silencieuse de glpi (glpi-install.sh)
  
 
 ## Erreurs de lancement
