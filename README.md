@@ -13,7 +13,7 @@
   - Sudo sans mot de passe en local et en distant
 ## Depuis pip install
   - paramiko2.7.1
-  - yaml-1.3
+  - yaml-1.3 
   
 
 
