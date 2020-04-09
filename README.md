@@ -11,7 +11,7 @@
   - pip3
   - Client sous debian
   - Sudo sans mot de passe en local et en distant
-## Depuis pip install
+## Depuis pip3 install
   - paramiko2.7.1
   - yaml-1.3 
   
@@ -59,7 +59,7 @@ $ python3.8 --version
 
 
 ### dépendances
-#### pip
+#### pip3
 ```
 $ sudo apt install python3-pip
 ```
